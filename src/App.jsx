@@ -1,10 +1,13 @@
 
 import './App.css';
 
+import SideMenu from './component/Side_menu/SideMenu';
+
 function App() {
   return (
     <div className="App">
-<h1>yahia</h1>
+
+        <SideMenu/>
 
     </div>
   );

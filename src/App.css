@@ -1,4 +1,12 @@
+
+*{
+  margin: 0px;
+  padding: 0px;
+}
+
 .App {
-  text-align: center;
+ display: flex;
+ direction: rtl;
+ background-color: black;
 }
 
