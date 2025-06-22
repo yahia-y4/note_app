@@ -1,6 +1,29 @@
 .SideMenu_div{
-    background-color: rgb(29, 34, 44);
+    background-color: #1d222c;
     height:930px;
     width: 30%;
     border-left: 1px solid #fff;
+    padding-top: 80px;
+
+}
+
+.notes_container{
+       height: 700px;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-around;
+   overflow: auto;
+     gap: 20px;
+  padding: 20px;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    height: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(#13191f, #384246);
+    border-radius: 10px;
+    opacity: 0.5;
 }

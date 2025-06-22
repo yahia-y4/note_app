@@ -3,10 +3,14 @@
   margin: 0px;
   padding: 0px;
 }
-
+body{
+  overflow: hidden;
+}
 .App {
  display: flex;
+
  direction: rtl;
  background-color: black;
+
 }
 
