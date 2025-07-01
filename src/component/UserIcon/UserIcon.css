@@ -1,0 +1,10 @@
+.user_div{
+    background-color: rgba(228, 243, 243, 0.546);
+    text-align: center;
+    width: 50px;
+    border-radius: 50%;
+    margin-top: 10px;
+}
+.user_div img{
+    width: 25px;
+}
