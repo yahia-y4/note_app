@@ -1,14 +1,16 @@
-.Work_menu_div{
-   height: 100vh;
-   width: 70%;
-       background-color: #1d222c;
-
+.Work_menu_div {
+  height: 100vh;
+  width: 70%;
+  background-color: #1d222c;
 }
 
-.top_icons_div{
+.top_icons_div {
   border-bottom: 1px solid #fff;
-    height: 60px;
-    display: flex;
-    padding-top: 10px;
-    padding-right: 10px;
+  height: 50px;
+  display: flex;
+
+ width: 400px;
+ justify-content: space-around;
+ align-items: center;
+
 }
