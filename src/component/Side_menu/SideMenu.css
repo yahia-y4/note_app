@@ -20,6 +20,9 @@
 
 .top_side{
     height: 80px;
+    display: flex;
+    direction: ltr;
+    justify-content: space-between;
     
 
 }

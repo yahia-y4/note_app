@@ -5,7 +5,7 @@ export default function UserIcon() {
     <div className="user_div">
             <img src="/img/user.png" alt="e" />
 
-      <div className="user_name">user</div>
+      
     </div>
   );
 }
