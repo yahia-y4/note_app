@@ -1,19 +1,19 @@
+import "./App.css";
 
-import './App.css';
-
-import SideMenu from './component/Side_menu/SideMenu';
-import WorkMenu from './component/WorkMenu/WorkMenu';
-import AddNewNote from './component/AddNewNote/AddNewNote';
+import SideMenu from "./component/Side_menu/SideMenu";
+import WorkMenu from "./component/WorkMenu/WorkMenu";
+import AddNewNote from "./component/AddNewNote/AddNewNote";
+import Login from "./component/Login/Login";
 
 function App() {
-  
   return (
     <div className="App">
-
-        <SideMenu/>
-        <WorkMenu/>
-        {/* <AddNewNote/> */}
-
+      <div className="App_">
+        <SideMenu />
+        {/* <WorkMenu/>
+        <AddNewNote/>  */}
+      </div>
+      <Login/>
     </div>
   );
 }

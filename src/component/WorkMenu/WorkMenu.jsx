@@ -8,7 +8,6 @@ export default function WorkMenu() {
     <div className="Work_menu_div">
       <div className="top_icons_div">
         <Icon onClick={save} text={"save"}></Icon>
-     
         <Icon onClick={save} text={"copy"}></Icon>
         <Icon onClick={save} text={"paste"}></Icon>
         <Icon onClick={save} text={"add"}></Icon>

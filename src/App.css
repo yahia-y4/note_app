@@ -7,11 +7,13 @@ body{
 /* overflow: hidden; */
 }
 .App {
- display: flex;
 
  direction: rtl;
- background-color: black;
+ 
  
 
+}
+.App_{
+  display: flex;
 }
 
