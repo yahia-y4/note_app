@@ -1,0 +1,13 @@
+.error_ms{
+   background-color: #1d222c;
+width: 100%;
+height: 30px;
+position: absolute;
+top: 10px;
+text-align: center;
+border-radius: 10px;
+
+}
+.error_ms div{
+color: #e61313;
+}

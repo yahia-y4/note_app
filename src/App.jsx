@@ -3,6 +3,7 @@ import "./App.css";
 import SideMenu from "./component/Side_menu/SideMenu";
 import WorkMenu from "./component/WorkMenu/WorkMenu";
 import AddNewNote from "./component/AddNewNote/AddNewNote";
+import Error from "./component/Error/Error";
 import Login from "./component/Login/Login";
 
 function App() {
@@ -10,10 +11,11 @@ function App() {
     <div className="App">
       <div className="App_">
         <SideMenu />
-        {/* <WorkMenu/>
-        <AddNewNote/>  */}
+         <WorkMenu/>
       </div>
-      <Login/>
+      {/* <Login/>
+      <Error error={"خطاء في اسم المستخدم او كلمة المرور"}/> */}
+      
     </div>
   );
 }
