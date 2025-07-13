@@ -13,8 +13,8 @@ function App() {
         <SideMenu />
          <WorkMenu/>
       </div>
-      {/* <Login/>
-      <Error error={"خطاء في اسم المستخدم او كلمة المرور"}/> */}
+      <Login/>
+      <Error error={"خطاء في اسم المستخدم او كلمة المرور"}/>
       
     </div>
   );
