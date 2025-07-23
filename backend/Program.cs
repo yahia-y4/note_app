@@ -109,7 +109,7 @@ app.MapPost("/addnote", [Microsoft.AspNetCore.Authorization.Authorize] async (Ht
     db.Notes.Add(note);
     await db.SaveChangesAsync();
 
-    return Results.Created($"/addnote/{note.Id}", note);
+    return Results.Ok(note);
 });
 
 // get all nots  -------------------------

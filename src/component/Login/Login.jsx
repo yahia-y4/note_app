@@ -19,6 +19,7 @@ ToBackEnd_c.addUser(LoginData.UserName,LoginData.Password)
 }
 function login(event){
   event.preventDefault()
+  ToBackEnd_c.login(LoginData.UserName,LoginData.Password)
 }
 
   return (

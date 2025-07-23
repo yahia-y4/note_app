@@ -13,6 +13,10 @@ function handleContent(event){
 setNoteData({...noteData,content:event.target.value})
 }
 
+function save(){
+  
+}
+
 
   return (
     <div className="Work_menu_div">

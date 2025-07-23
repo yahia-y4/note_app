@@ -11,10 +11,11 @@ function App() {
     <div className="App">
       <div className="App_">
         <SideMenu />
-         <WorkMenu/>
+         {/* <WorkMenu/> */}
+         <AddNewNote/>
       </div>
-      <Login/>
-      <Error error={"خطاء في اسم المستخدم او كلمة المرور"}/>
+      {/* <Login/> */}
+      {/* <Error error={"خطاء في اسم المستخدم او كلمة المرور"}/> */}
       
     </div>
   );

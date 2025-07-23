@@ -11,20 +11,7 @@ export default function Side_menu() {
         <UserIcon />
       </div>
       <div className="notes_container">
-        <OneNote></OneNote>
-        <OneNote></OneNote>
-        <OneNote></OneNote>
-        <OneNote></OneNote>
-        <OneNote></OneNote>
-        <OneNote></OneNote>
-        <OneNote></OneNote>
-        <OneNote></OneNote>
-        <OneNote></OneNote>
-        <OneNote></OneNote>
-        <OneNote></OneNote>
-        <OneNote></OneNote>
-        <OneNote></OneNote>
-        <OneNote></OneNote>
+      
       </div>
     </div>
   );
