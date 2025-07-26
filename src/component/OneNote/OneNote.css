@@ -15,10 +15,12 @@
     font-size: 17px;
     font-weight: 700;
     color: #dcd6d6;
+    overflow: hidden;
 }
 
 .one_note_div .Content{
     margin-top: 5px;
     height: 110px;
     color: #afaaaa;
+    overflow: hidden;
 }

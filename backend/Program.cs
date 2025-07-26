@@ -85,6 +85,11 @@ app.MapPost("/login", async (AppDbContext db, User user) =>
 
 app.MapPost("/adduser", async(AppDbContext db, User user)=>
 {
+    var exists = await db.Users.AnyAsync(u => u.UserName == user.UserName);
+    if (exists)
+    {
+        return Results.BadRequest("اسم المستخدم موجود مسبقًا");
+    }
    db.Users.Add(user);
     await db.SaveChangesAsync();
     return Results.Created($"/adduser/{user.Id}", user);
@@ -168,6 +173,10 @@ app.MapPut("/softdelete/{id:int}",[Microsoft.AspNetCore.Authorization.Authorize]
     if (_note == null)
     {
         return Results.NotFound($"not fide this note {id}");
+    }
+    if (_note.Is_Deleted)
+    {
+        return Results.NotFound($"{id} is already deleted");
     }
     int userId = int.Parse(userIdStr);
     if (_note.UserId != userId)

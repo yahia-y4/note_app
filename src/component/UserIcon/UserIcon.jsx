@@ -1,8 +1,9 @@
 import "./UserIcon.css";
 
-export default function UserIcon() {
+export default function UserIcon({onClick}) {
+  
   return (
-    <div className="user_div">
+    <div onClick={onClick} className="user_div">
             <img src="/img/user.png" alt="e" />
 
       
