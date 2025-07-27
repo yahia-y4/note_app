@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5069";
+const BASE_URL = "http://note-app.somee.com";
 
 export async function addUser(username, password) {
   try{

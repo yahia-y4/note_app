@@ -8,14 +8,19 @@ using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddCors();
+builder.Services.AddRouting();
+builder.Services.AddAuthorization();
+builder.Services.AddControllers();
 
-// إضافة DbContext مع الاتصال بقاعدة البيانات
+
+
+// الاتصال بقاعدة البيانات
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
-// ====== Add JWT Authentication =========
-var key = "M5p#G7r!J2k&Z9q*L1v^B3x@N8d$T6e@"; 
+// إعداد JWT
+var key = "M5p#G7r!J2k&Z9q*L1v^B3x@N8d$T6e@";
 var keyBytes = Encoding.UTF8.GetBytes(key);
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -31,31 +36,25 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowReactApp",
-        policy => policy.WithOrigins("http://localhost:3000")
-                        .AllowAnyHeader()
-                        .AllowAnyMethod());
-});
-
-
-
-
-builder.Services.AddAuthorization();
 var app = builder.Build();
-app.UseCors("AllowReactApp");
-app.UseHttpsRedirection();
-app.UseAuthentication();  
-app.UseAuthorization();  
-app.UseHttpsRedirection();
 
-//  Login - 
 
+app.UseRouting();
+app.UseCors(policy =>
+    policy.AllowAnyOrigin()
+          .AllowAnyMethod()
+          .AllowAnyHeader());
+
+app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
+
+// ===================== APIs =======================
+
+// تسجيل الدخول
 app.MapPost("/login", async (AppDbContext db, User user) =>
 {
     var existUser = await db.Users.FirstOrDefaultAsync(u => u.UserName == user.UserName && u.Password == user.Password);
-        
 
     if (existUser == null)
         return Results.Unauthorized();
@@ -80,31 +79,24 @@ app.MapPost("/login", async (AppDbContext db, User user) =>
     return Results.Ok(new { token = jwt });
 });
 
-
-// add user --------------------------------
-
-app.MapPost("/adduser", async(AppDbContext db, User user)=>
+// إنشاء مستخدم جديد
+app.MapPost("/adduser", async (AppDbContext db, User user) =>
 {
     var exists = await db.Users.AnyAsync(u => u.UserName == user.UserName);
     if (exists)
-    {
         return Results.BadRequest("اسم المستخدم موجود مسبقًا");
-    }
-   db.Users.Add(user);
+
+    db.Users.Add(user);
     await db.SaveChangesAsync();
     return Results.Created($"/adduser/{user.Id}", user);
 });
 
-
-// add note ----------------------------------
-
+// إضافة ملاحظة
 app.MapPost("/addnote", [Microsoft.AspNetCore.Authorization.Authorize] async (HttpContext http, AppDbContext db, Note note) =>
 {
-    
     var userIdStr = http.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
     if (userIdStr is null)
-        return Results.Unauthorized(); 
+        return Results.Unauthorized();
 
     int userId = int.Parse(userIdStr);
 
@@ -117,77 +109,64 @@ app.MapPost("/addnote", [Microsoft.AspNetCore.Authorization.Authorize] async (Ht
     return Results.Ok(note);
 });
 
-// get all nots  -------------------------
-
-app.MapGet("/getnotes",[Microsoft.AspNetCore.Authorization.Authorize] async (HttpContext http,AppDbContext db )=>
+// جلب جميع الملاحظات
+app.MapGet("/getnotes", [Microsoft.AspNetCore.Authorization.Authorize] async (HttpContext http, AppDbContext db) =>
 {
     var userIdStr = http.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
     if (userIdStr == null)
-    {
         return Results.Unauthorized();
 
-    }
     int userId = int.Parse(userIdStr);
-    var nots = await db.Notes.Where(n => n.UserId == userId && n.Is_Deleted==false).ToListAsync();
-    return Results.Ok(nots);
+    var notes = await db.Notes.Where(n => n.UserId == userId && n.Is_Deleted == false).ToListAsync();
 
+    return Results.Ok(notes);
 });
 
-// update note -------------------------
+// تحديث ملاحظة
 app.MapPut("/updatenote/{id:int}", [Microsoft.AspNetCore.Authorization.Authorize] async (HttpContext http, AppDbContext db, Note note, int id) =>
 {
     var userIdStr = http.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
     if (userIdStr == null)
-    {
         return Results.Unauthorized();
-    }
+
     var _note = await db.Notes.FindAsync(id);
     if (_note == null)
-    {
-        return Results.NotFound($"not fide this note {id}");
-    }
+        return Results.NotFound($"Note {id} غير موجودة");
+
     int userId = int.Parse(userIdStr);
     if (_note.UserId != userId)
-    {
         return Results.Forbid();
-    }
 
     _note.Title = note.Title;
     _note.Content = note.Content;
     await db.SaveChangesAsync();
-    return Results.Ok(_note);
 
+    return Results.Ok(_note);
 });
 
-
-// del note ----------------------------------
-
-app.MapPut("/softdelete/{id:int}",[Microsoft.AspNetCore.Authorization.Authorize] async (HttpContext http, AppDbContext db, int id)=>
+// حذف ناعم لملاحظة
+app.MapPut("/softdelete/{id:int}", [Microsoft.AspNetCore.Authorization.Authorize] async (HttpContext http, AppDbContext db, int id) =>
 {
     var userIdStr = http.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
     if (userIdStr == null)
-    {
         return Results.Unauthorized();
-    }
+
     var _note = await db.Notes.FindAsync(id);
     if (_note == null)
-    {
-        return Results.NotFound($"not fide this note {id}");
-    }
+        return Results.NotFound($"Note {id} غير موجودة");
+
     if (_note.Is_Deleted)
-    {
-        return Results.NotFound($"{id} is already deleted");
-    }
+        return Results.BadRequest($"{id} تم حذفه مسبقًا");
+
     int userId = int.Parse(userIdStr);
     if (_note.UserId != userId)
-    {
         return Results.Forbid();
-    }
+
     _note.Is_Deleted = true;
     await db.SaveChangesAsync();
-    return Results.Ok($"{id}  deleted");
-} );
 
+    return Results.Ok($"{id} تم حذفه");
+});
 
-
+app.MapControllers();
 app.Run();

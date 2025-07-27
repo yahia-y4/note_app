@@ -5,7 +5,7 @@ import { addUser, getNotes, login } from "../../services/Api";
 import { NotesContext } from "../../contexts/NoteContext";
 import { useState, useContext } from "react";
 export default function Login({ isVisible }) {
-  const { setLoginState, setNotes, setError } = useContext(NotesContext);
+  const { setLoginState, setNotes, setError ,setWorkState} = useContext(NotesContext);
   const [LoginData, setLoginData] = useState({ UserName: "", Password: "" });
   function handleUser(event) {
     setLoginData({ ...LoginData, UserName: event.target.value });
@@ -22,6 +22,8 @@ export default function Login({ isVisible }) {
     }
     setLoginState(false);
     await reloadData();
+    setWorkState(false)
+
   }
   async function addUserfun(event) {
     event.preventDefault();
