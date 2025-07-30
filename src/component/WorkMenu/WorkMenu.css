@@ -5,12 +5,12 @@
 }
 
 .top_icons_div {
-  border-bottom: 1px solid #fff;
   height: 50px;
   display: flex;
-
- width: 400px;
+ width: 200px;
  justify-content: space-around;
  align-items: center;
+color: #c1bebe;
+
 
 }

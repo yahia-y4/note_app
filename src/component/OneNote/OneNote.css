@@ -16,6 +16,8 @@
     font-weight: 700;
     color: #dcd6d6;
     overflow: hidden;
+    width: 80%;
+    min-width: 5px;
 }
 
 .one_note_div .Content{
@@ -23,4 +25,12 @@
     height: 110px;
     color: #afaaaa;
     overflow: hidden;
+}
+
+
+@media (max-width: 750px) {
+.one_note_div {
+width: 90px;
+  height: 200px;
+}
 }

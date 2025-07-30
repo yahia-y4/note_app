@@ -12,7 +12,8 @@
 .login_div form{
    background-color: #1d222c;
     height: 300px;
-    width: 30%;
+  width: 30%;
+    min-width: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,7 +24,7 @@
 }
 
 .login_div form input{
-     width: 60%;
+     width: 90%;
     height: 25px;
 
     border: none;
@@ -35,17 +36,17 @@
 }
 
 .but_div_login{
-    margin-top: 20px;
-   
-    width: 20%;
+    margin-top: 50px;
     display: flex;
     justify-content: space-around;
+    width: 50%;
+    min-width:150px ;
 }
 
 .but_div_login button{
 background-color: #35394256;
 border: 1px solid #fff;
 color: #ffffff;
-padding: 5px;
+padding: 5px 2px;
 font-size: 20px;
 }

@@ -1,12 +1,26 @@
 import "./WorkMenu.css";
+
 import { updateNote, deleteNote, getNotes } from "../../services/Api";
 import { NotesContext } from "../../contexts/NoteContext";
+
 import { useState, useEffect, useContext } from "react";
+
+// icons
+import ReplyAllOutlinedIcon from "@mui/icons-material/ReplyAllOutlined";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+
 import TextField from "../TextField/TextField";
-import Icon from "../Icon/Icon";
 export default function WorkMenu({ isVisible }) {
-  const { setNotes, SelectedNote, setSelectedNote, setWorkState, setError } =
-    useContext(NotesContext);
+  const {
+    setNotes,
+    SelectedNote,
+    setSelectedNote,
+    setWorkState,
+    setError,
+    setLoading,
+  } = useContext(NotesContext);
+
   const [noteData, setNoteData] = useState({ title: "", content: "" });
 
   useEffect(() => {
@@ -27,26 +41,38 @@ export default function WorkMenu({ isVisible }) {
   async function setNotesFun() {
     const result = await getNotes();
     if (result.data) {
+      setLoading(false);
+
       setNotes(result.data);
       setError("");
     } else {
+      setLoading(false);
+
       setError(result.error);
     }
   }
   async function save() {
+    setLoading(true);
+
     const result = await updateNote(
       SelectedNote.id,
       noteData.title,
       noteData.content
     );
     if (result.error) {
+      setLoading(false);
+
       return setError(result.error);
     }
     await setNotesFun();
   }
   async function delNote() {
+    setLoading(true);
+
     const result = await deleteNote(SelectedNote.id);
     if (result.error) {
+      setLoading(false);
+
       return setError(result.error);
     }
     await setNotesFun();
@@ -57,15 +83,14 @@ export default function WorkMenu({ isVisible }) {
     return (
       <div className="Work_menu_div">
         <div className="top_icons_div">
-          <Icon onClick={save} text={"save"}></Icon>
-          <Icon
+          <SaveOutlinedIcon onClick={save} />
+          <DeleteOutlinedIcon onClick={delNote} />
+          <ReplyAllOutlinedIcon
             onClick={() => {
               setWorkState(false);
               setSelectedNote({});
             }}
-            text={"back"}
-          ></Icon>
-          <Icon onClick={delNote} text={"delete"}></Icon>
+          />
         </div>
 
         <TextField

@@ -8,6 +8,8 @@ export function NotesProvider({ children }) {
   const [workState, setWorkState] = useState(false);
   const [loginState, setLoginState] = useState(false);
   const [error, setError] = useState("");
+  const [loading,setLoading]=useState(false)
+  const [username,setUsername]= useState("user name")
 
   return (
     <NotesContext.Provider
@@ -22,6 +24,10 @@ export function NotesProvider({ children }) {
         setLoginState,
         error,
         setError,
+        loading,
+        setLoading,
+        username,
+        setUsername
       }}
     >
       {children}

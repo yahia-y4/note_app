@@ -91,6 +91,21 @@ app.MapPost("/adduser", async (AppDbContext db, User user) =>
     return Results.Created($"/adduser/{user.Id}", user);
 });
 
+
+
+// الحصول على اسم المستخدم 
+
+app.MapGet("/me", [Microsoft.AspNetCore.Authorization.Authorize] async (HttpContext http) =>
+{
+var username = http.User.Identity?.Name ?? http.User.FindFirst(ClaimTypes.Name)?.Value ?? http.User.FindFirst("username")?.Value;
+if (username == null)
+{
+    return Results.Unauthorized();
+}
+return Results.Ok(username);
+
+});
+
 // إضافة ملاحظة
 app.MapPost("/addnote", [Microsoft.AspNetCore.Authorization.Authorize] async (HttpContext http, AppDbContext db, Note note) =>
 {

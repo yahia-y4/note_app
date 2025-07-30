@@ -1,11 +1,11 @@
 import "./Login.css";
 
-import { addUser, getNotes, login } from "../../services/Api";
+import { addUser, getMyUserName, getNotes, login } from "../../services/Api";
 
 import { NotesContext } from "../../contexts/NoteContext";
 import { useState, useContext } from "react";
 export default function Login({ isVisible }) {
-  const { setLoginState, setNotes, setError ,setWorkState} = useContext(NotesContext);
+  const { setLoginState, setNotes, setError ,setWorkState,setLoading,setUsername} = useContext(NotesContext);
   const [LoginData, setLoginData] = useState({ UserName: "", Password: "" });
   function handleUser(event) {
     setLoginData({ ...LoginData, UserName: event.target.value });
@@ -16,13 +16,22 @@ export default function Login({ isVisible }) {
 
   async function loginfun(event) {
     event.preventDefault();
+    setLoading(true)
     const result = await login(LoginData.UserName, LoginData.Password);
     if (result.error) {
+      setLoading(false)
       return setError(result.error);
+      
+    }
+    const user = await getMyUserName()
+    if(user.error){
+      return setError(user.error)
     }
     setLoginState(false);
     await reloadData();
     setWorkState(false)
+    setUsername(user.username)
+    setLoading(false)
 
   }
   async function addUserfun(event) {

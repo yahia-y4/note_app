@@ -1,6 +1,6 @@
 .SideMenu_div{
     background-color: #1d222c;
-    height:930px;
+    height:100vh;
     width: 30%;
     border-left: 1px solid #c1bebe;
     
@@ -23,9 +23,17 @@
 .top_side{
     height: 80px;
     display: flex;
-    direction: ltr;
-    justify-content: space-between;
+    direction: rtl;
+    gap: 10px;
     
+
+}
+.username{
+padding-top: 25px; 
+width: 150px;   
+color: #c1bebe;
+overflow: hidden;
+font-size: 15px;
 
 }
 
